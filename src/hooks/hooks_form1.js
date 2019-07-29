@@ -1,7 +1,8 @@
-import React, { useContext, useState, useReducer } from 'react';
+import React, { useContext, useState, useReducer, useEffect } from 'react';
 import * as ACTIONS from '../store/actions/actions';
 import * as FormReducer from '../store/reducers/form_reducer';
 import Context from '../utils/context';
+import ReactGA from 'react-ga';
 
 
 const HooksForm1 = () => {
@@ -20,6 +21,11 @@ const HooksForm1 = () => {
 
   const handleuseStateSubmit = (event) => {
     event.preventDefault();
+    ReactGA.event({
+     category: 'Form',
+     action: 'Form Submit',
+     transport: 'beacon'
+   });
     setValueSubmit(event.target.useState.value)
   };
 

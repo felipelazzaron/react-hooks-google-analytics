@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import Context from './utils/context';
 import * as ACTIONS from './store/actions/actions';
 
@@ -14,6 +14,7 @@ const auth = new Auth()
 
 
 const ContextState = () => {
+    const [initialLoad, setInitialLoad] = useState(false)
     /*
         Plain Reducer
     */
@@ -93,6 +94,10 @@ const ContextState = () => {
             stateProp2: stateReducer1.stateprop2,
             dispatchContextTrue: () => handleDispatchTrue(),
             dispatchContextFalse: () => handleDispatchFalse(),
+
+            //Initial Load
+            initialLoadProp: initialLoad,
+            setInitialLoadProp: () => setInitialLoad(true),
 
             //Form Reducer
             useContextChangeState: stateFormReducer.user_textChange,
