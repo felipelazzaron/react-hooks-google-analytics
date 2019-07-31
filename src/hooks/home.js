@@ -21,13 +21,16 @@ const Home = props => {
             rootMargin: '0px',
             threshold: 0
     }
-    const callback = entry => {
-        if(entry.isIntersection) {
-          ReactGA.event({
-            category: 'Scroll',
-            action: 'Scrolled to heading 2'
-          })
-        }
+    const callback = list => {
+      list.forEach(entry => {
+        if(entry.isIntersecting) {
+            ReactGA.event({
+              category: 'Scroll',
+              action: 'Scrolled to heading 2',
+              value: entry.intersectionRatio
+            })
+          }
+       })
     }
     const observerScroll = new IntersectionObserver(callback, opts)
 
@@ -36,9 +39,12 @@ const Home = props => {
 
   return(
     <div>
+     {performance.mark('start')}
       <img height="500px"
            width="500px"
            src="https://timedotcom.files.wordpress.com/2019/03/kitten-report.jpg" alt=""/>
+      {performance.mark('end')}
+      {performance.measure('diff', 'start', 'end')}
       <div style={{height: '500px', backgroundColor: 'red'}}>
         <h1>First Heading</h1>
       </div>

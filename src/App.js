@@ -10,21 +10,27 @@ ReactGA.initialize('UA-144556525-1');
 
 
 ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
-  console.log(tti)
+  ReactGA.timing({
+    category: "Load Performace",
+    variable: 'Time to Interactive',
+    value: tti
+  })
 });
 
 
 const callback = list => {
     list.getEntries().forEach(entry => {
-      // Display each reported measurement on console
-    if (console) {
-      console.log(entry);
-    }
+      console.log(entry)
+        ReactGA.timing({
+          category: "First Meaningful Paint",
+          variable: entry.name,
+          value: entry.responseEnd
+        })
   })
 }
 
 var observer = new PerformanceObserver(callback);
-  observer.observe({entryTypes: [
+observer.observe({entryTypes: [
                                   // 'navigation',
                                   // 'paint',
                                   // 'resource',
@@ -45,10 +51,16 @@ var observer = new PerformanceObserver(callback);
      let pageHit = `/${rootURL}/${userPage}`
      ReactGA.pageview(pageHit)
    } else {
+     ReactGA.set({ page: location.pathname });
      ReactGA.pageview(location.pathname)
    }
 });
 
+// history.listen((location) => {
+//     ReactGA.set({ page: location.pathname });
+//     ReactGA.pageview(location.pathname)
+//   }
+// );
 
 const App = () => {
 
